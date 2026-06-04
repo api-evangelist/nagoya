@@ -1,0 +1,49 @@
+---
+name: Nagoya University
+description: Nagoya University public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/nagoya/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Nagoya University has a limited but real public, machine-readable API
+      footprint. The one clearly documented, verified-live API is the NAGOYA
+      Repository OAI-PMH 2.0 endpoint (WEKO3 / JAIRO Cloud), whose Identify
+      response confirmed repositoryName "NAGOYA Repository". The WEKO3 platform
+      also exposes search and record endpoints, but probes returned 400/500/410
+      and they are not presented as documented developer APIs, so they were not
+      cataloged. Student/staff systems (portal, NU-ID, course registration) are
+      gated behind THERS / GakuNin Shibboleth/SAML SSO and are not public
+      developer APIs. No official university-wide GitHub organization or public
+      developer portal was found; only individual lab orgs exist. No fabricated
+      endpoints — only verified URLs are listed.
+    endpoints:
+      - url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+        status: 200
+        note: NAGOYA Repository OAI-PMH Identify — valid XML, repositoryName "NAGOYA Repository".
+      - url: https://nagoya.repo.nii.ac.jp/oai?verb=ListMetadataFormats
+        status: 200
+        note: OAI-PMH ListMetadataFormats responds.
+      - url: https://nagoya.repo.nii.ac.jp/
+        status: 200
+        note: NAGOYA Repository web front end (WEKO3).
+      - url: https://nagoya.repo.nii.ac.jp/search?search_type=2&q=test
+        status: 400
+        note: WEKO search endpoint exists but rejected probe params; not documented public API.
+      - url: https://nagoya.repo.nii.ac.jp/api/index/
+        status: 500
+        note: WEKO index API path present but errored on probe; not documented for external use.
+      - url: https://en.nagoya-u.ac.jp/
+        status: 200
+        note: Official English university website.
+      - url: https://icts.nagoya-u.ac.jp/en/services/nuid/
+        status: 200
+        note: NU-ID identity service (gated, SSO; not a public API).
+      - url: https://portal.nagoya-u.ac.jp/
+        status: 200
+        note: Student/staff portal — login-gated, no public API docs.
+      - url: https://www.linkedin.com/school/nagoya-university/
+        status: 0
+        note: LinkedIn school page (HTTP 999 anti-bot; not independently resolvable via probe).

@@ -1,0 +1,72 @@
+---
+aid: nagoya
+name: Nagoya University
+description: >-
+  Nagoya University (名古屋大学) is a national research university in Nagoya, Aichi,
+  Japan, ranked #152 in the QS World University Rankings 2025. As a leading
+  research institution it operates a range of academic and IT services through
+  its Information & Communications (ICTS) division and university library. Its
+  most clearly documented public, machine-readable API surface is the NAGOYA
+  Repository institutional repository, which runs on the NII WEKO3 / JAIRO Cloud
+  platform and exposes an OAI-PMH 2.0 interface for harvesting scholarly
+  metadata. Most other systems (student portal, NU-ID identity, course
+  registration) are gated behind THERS/GakuNin (Shibboleth/SAML) authentication
+  and are not publicly documented developer APIs.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/nagoya/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Access
+  - Institutional Repository
+  - OAI-PMH
+  - Japan
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: nagoya:repo-oai
+    name: NAGOYA Repository OAI-PMH
+    description: >-
+      OAI-PMH 2.0 metadata harvesting interface for the NAGOYA Repository, the
+      Nagoya University institutional repository running on the NII WEKO3 /
+      JAIRO Cloud platform. Supports the standard OAI-PMH verbs (Identify,
+      ListMetadataFormats, ListSets, ListIdentifiers, ListRecords, GetRecord)
+      for harvesting scholarly metadata (theses, articles, bulletins). The
+      Identify response was verified live and returns repositoryName "NAGOYA
+      Repository" with baseURL https://nagoya.repo.nii.ac.jp/oai.
+    humanURL: https://nagoya.repo.nii.ac.jp/
+    baseURL: https://nagoya.repo.nii.ac.jp/oai
+    tags: [ Institutional Repository, OAI-PMH, Open Access, Research, Metadata, WEKO ]
+    properties:
+      - type: Documentation
+        url: https://nagoya.repo.nii.ac.jp/
+      - type: BaseURL
+        url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+common:
+  - type: Website
+    url: https://en.nagoya-u.ac.jp/
+  - type: InstitutionalRepository
+    url: https://nagoya.repo.nii.ac.jp/
+  - type: ITServices
+    url: https://icts.nagoya-u.ac.jp/en/
+  - type: Authentication
+    url: https://icts.nagoya-u.ac.jp/en/services/nuid/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/nagoya-university/
+  - type: Plans
+    url: plans/nagoya-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nagoya-rate-limits.yml
+  - type: FinOps
+    url: finops/nagoya-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
