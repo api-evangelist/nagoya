@@ -1,0 +1,62 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "nagoya": "https://en.nagoya-u.ac.jp/#",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "schema": "https://schema.org/",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "email": "schema:email",
+    "Organization": "schema:CollegeOrUniversity",
+    "institution": {
+      "@id": "nagoya:institution",
+      "@type": "schema:CollegeOrUniversity"
+    },
+    "repository": {
+      "@id": "nagoya:repository",
+      "@type": "schema:DataCatalog"
+    },
+    "repositoryName": "oai:repositoryName",
+    "baseURL": {
+      "@id": "oai:baseURL",
+      "@type": "@id"
+    },
+    "protocolVersion": "oai:protocolVersion",
+    "earliestDatestamp": {
+      "@id": "oai:earliestDatestamp",
+      "@type": "schema:Date"
+    },
+    "adminEmail": "schema:email",
+    "record": {
+      "@id": "oai:record",
+      "@type": "schema:CreativeWork"
+    },
+    "identifier": "dc:identifier",
+    "title": "dc:title",
+    "creator": "dc:creator",
+    "publisher": "dc:publisher",
+    "date": {
+      "@id": "dc:date",
+      "@type": "schema:Date"
+    },
+    "subject": "dc:subject",
+    "type": "dc:type",
+    "language": "dc:language",
+    "rights": "dc:rights"
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "Nagoya University",
+  "url": "https://en.nagoya-u.ac.jp/",
+  "description": "National research university in Nagoya, Aichi, Japan. Operates the NAGOYA Repository institutional repository on the NII WEKO3 / JAIRO Cloud platform, exposing an OAI-PMH 2.0 interface for harvesting scholarly metadata.",
+  "repository": {
+    "@type": "DataCatalog",
+    "name": "NAGOYA Repository",
+    "url": "https://nagoya.repo.nii.ac.jp/",
+    "baseURL": "https://nagoya.repo.nii.ac.jp/oai",
+    "protocolVersion": "2.0",
+    "earliestDatestamp": "2017-11-30T00:00:00Z",
+    "adminEmail": "ir-admin@nul.nagoya-u.ac.jp"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "repo": "nagoya",
+  "feeds": [
+    {
+      "source": "https://en.nagoya-u.ac.jp/",
+      "feed_url": "https://en.nagoya-u.ac.jp/research/activities/news/index.html",
+      "title": "Nagoya University Research News",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
