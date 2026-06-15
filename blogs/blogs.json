@@ -6,9 +6,10 @@
       "feed_url": "https://en.nagoya-u.ac.jp/research/activities/news/index.html",
       "title": "Nagoya University Research News",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "No machine-readable blog feed found for Nagoya University"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-03T00:00:00Z"
+  "fetched": "2026-06-07T00:00:00Z"
 }
