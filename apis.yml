@@ -49,6 +49,8 @@ apis:
       - type: BaseURL
         url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
 common:
+  - type: DomainSecurity
+    url: security/nagoya-domain-security.yml
   - type: Website
     url: https://en.nagoya-u.ac.jp/
   - type: InstitutionalRepository
