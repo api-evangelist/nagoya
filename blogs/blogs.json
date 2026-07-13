@@ -5,11 +5,12 @@
       "source": "https://en.nagoya-u.ac.jp/",
       "feed_url": "https://en.nagoya-u.ac.jp/research/activities/news/index.html",
       "title": "Nagoya University Research News",
-      "saved": 10,
+      "saved": 0,
       "method": "html-scrape",
-      "note": "RSS at /feed/ resolves but is empty; scraped dated article links from the research news index page"
+      "note": "RSS at /feed/ resolves but is empty; scraped dated article links from the research news index page",
+      "error": "parse_failed"
     }
   ],
   "post_count": 10,
-  "fetched": "2026-06-21T17:00:00Z"
+  "fetched": "2026-07-11T11:43:46Z"
 }
