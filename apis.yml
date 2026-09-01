@@ -1,17 +1,27 @@
 ---
 aid: nagoya
 name: Nagoya University
+x-type: university
+x-category: Public Research University
 description: >-
-  Nagoya University (名古屋大学) is a national research university in Nagoya, Aichi,
-  Japan, ranked #152 in the QS World University Rankings 2025. As a leading
-  research institution it operates a range of academic and IT services through
-  its Information & Communications (ICTS) division and university library. Its
-  most clearly documented public, machine-readable API surface is the NAGOYA
-  Repository institutional repository, which runs on the NII WEKO3 / JAIRO Cloud
-  platform and exposes an OAI-PMH 2.0 interface for harvesting scholarly
-  metadata. Most other systems (student portal, NU-ID identity, course
-  registration) are gated behind THERS/GakuNin (Shibboleth/SAML) authentication
-  and are not publicly documented developer APIs.
+  Nagoya University (名古屋大学) is a national research university in Nagoya, Aichi, Japan, founded
+  1871, a member of Japan's Designated National University group and, since 2020, part of the Tokai
+  National Higher Education and Research System (THERS) alongside Gifu University. It runs no
+  developer portal, publishes no OpenAPI and issues no API keys, and this profile does not pretend
+  otherwise. What it does operate, on its own nagoya-u.ac.jp hosts, are two genuinely
+  institution-run machine surfaces: a Shibboleth SAML 2.0 identity provider
+  (https://shib.nagoya-u.ac.jp/idp/shibboleth) registered in GakuNin, Japan's academic access
+  management federation, since 2014; and the ERG Science Center at the Institute for Space-Earth
+  Environmental Research, which serves the Arase (ERG) satellite and ground-based observation data
+  archive as an open, machine-traversable HTTPS tree that the pySPEDAS and SPEDAS analysis clients
+  read directly. Its institutional repository, NAGOYA Repository, is a TENANT deployment on the
+  National Institute of Informatics' WEKO3 / JAIRO Cloud platform: the content, the metadata and the
+  library administrators are Nagoya's, but the OAI-PMH endpoint and its contract are NII's and are
+  not credited here. The university is registered in ROR (04chrp450) but is a member of neither
+  DataCite nor Crossref — Japanese repositories mint DOIs through JaLC. Student records, course
+  registration, the NU Portal and campus IT all sit behind THERS/GakuNin authentication and are not
+  publicly documented developer APIs. Several relevant surfaces, including the university's own
+  GakuNin service documentation, exist only in Japanese.
 type: Index
 deliveryModel:
   model: saas
@@ -44,46 +54,172 @@ tags:
   - Education
   - Higher Education
   - University
-  - Research
-  - Open Access
-  - Institutional Repository
-  - OAI-PMH
   - Japan
+  - Designated National University
+  - Research
+  - Research Repository
+  - Open Access
+  - OAI-PMH
+  - Identity Federation
+  - Shibboleth
+  - Research Data
+  - Research Computing
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: nagoya:repo-oai
-    name: NAGOYA Repository OAI-PMH
+  - aid: nagoya:identity-federation
+    name: Nagoya University Shibboleth Identity Provider (GakuNin)
+    x-operator: institution
     description: >-
-      OAI-PMH 2.0 metadata harvesting interface for the NAGOYA Repository, the
-      Nagoya University institutional repository running on the NII WEKO3 /
-      JAIRO Cloud platform. Supports the standard OAI-PMH verbs (Identify,
-      ListMetadataFormats, ListSets, ListIdentifiers, ListRecords, GetRecord)
-      for harvesting scholarly metadata (theses, articles, bulletins). The
-      Identify response was verified live and returns repositoryName "NAGOYA
-      Repository" with baseURL https://nagoya.repo.nii.ac.jp/oai.
-    humanURL: https://nagoya.repo.nii.ac.jp/
-    baseURL: https://nagoya.repo.nii.ac.jp/oai
-    tags: [ Institutional Repository, OAI-PMH, Open Access, Research, Metadata, WEKO ]
+      Institution-operated Shibboleth SAML 2.0 identity provider on the university's own host,
+      published as machine-readable metadata in the GakuNin (学術認証フェデレーション) aggregate.
+      EntityDescriptor ID PI0136JP, entityID https://shib.nagoya-u.ac.jp/idp/shibboleth,
+      shibmd:Scope nagoya-u.ac.jp, mdui:DisplayName "Nagoya University" / "名古屋大学", keywords
+      category:location:chubu and category:organizationType:university, registered with
+      registrationAuthority https://www.gakunin.jp on 2014-04-30. It carries both IDPSSODescriptor
+      and AttributeAuthorityDescriptor roles and three SingleSignOnService endpoints —
+      /idp/profile/Shibboleth/SSO, /idp/profile/SAML2/POST/SSO and /idp/profile/SAML2/Redirect/SSO.
+      The signing certificate is issued by NII Open Domain CA - G8 RSA to CN=shib.nagoya-u.ac.jp,
+      O=Nagoya University. Verified 2026-09-01 by fetching the 5.65 MB GakuNin aggregate and parsing
+      all 650 EntityDescriptors: exactly one is Nagoya's, and no Nagoya-operated service providers
+      are registered. Negative finding worth recording: the eduGAIN technical entity list carries 173
+      GakuNin entities and none of them is Nagoya's, so this IdP is federated nationally but not
+      exported to eduGAIN. This is a real, machine-readable, institution-run surface and it is the
+      class of university API that is almost never catalogued.
+    humanURL: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+    baseURL: https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO
+    tags: [ Identity Federation, SAML, Shibboleth, Single Sign-On, Authentication, GakuNin ]
     properties:
       - type: Documentation
-        url: https://nagoya.repo.nii.ac.jp/
-      - type: BaseURL
-        url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+        url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+      - type: Authentication
+        url: authentication/nagoya-authentication.yml
+      - type: Conformance
+        url: conformance/nagoya-conformance.yml
+  - aid: nagoya:ergsc-data-archive
+    name: ERG Science Center data archive (ISEE, Nagoya University)
+    x-operator: institution
+    description: >-
+      Open, machine-traversable HTTPS data archive operated by the ERG Science Center at Nagoya
+      University's Institute for Space-Earth Environmental Research (ISEE, formerly STEL). It serves
+      the Arase (ERG) satellite instrument data — att, hep, lepe, lepi, mepe, mepi, mgf, orb, pwe and
+      xep — alongside ground-based observation data, guest datasets and the Conjunction Event Finder
+      archive, in CDF. There is no OpenAPI and no REST contract: the interface is an Apache directory
+      index over a stable path grammar, and it is consumed programmatically by the SPEDAS (IDL) and
+      pySPEDAS (Python) analysis frameworks through the ERG plug-in, which resolves file paths
+      against this host. The Conjunction Event Finder is a set of CGI services on the same host
+      (/cef/geotail.cgi, /cef/cluster.cgi, /cef/akebono.cgi, /cef/reimei.cgi, /cef/tc1.cgi,
+      /cef/tc2.cgi), moved to Nagoya from JAXA/ISAS DARTS in 2013. Verified live 2026-09-01: GET
+      /data/ergsc/ returns 200 with a real index listing cef/, ground/, guest/ and satellite/, and
+      GET /data/ergsc/satellite/erg/ returns 200 listing the ten instrument directories. No spec is
+      generated for it — a directory tree is not a contract, and inventing one would be fabrication.
+    humanURL: https://ergsc.isee.nagoya-u.ac.jp/
+    baseURL: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+    tags: [ Research Data, Open Data, Space Physics, CDF, Arase, SPEDAS, Satellite ]
+    properties:
+      - type: Documentation
+        url: https://ergsc.isee.nagoya-u.ac.jp/data_info/howto.shtml.en
+      - type: Website
+        url: https://ergsc.isee.nagoya-u.ac.jp/
+      - type: SourceCode
+        url: https://github.com/spedas/pyspedas
+  - aid: nagoya:repo-oai
+    name: NAGOYA Repository OAI-PMH (NII WEKO3 / JAIRO Cloud tenant)
+    x-operator: tenant
+    description: >-
+      OAI-PMH 2.0 metadata harvesting interface for the NAGOYA Repository, Nagoya University's
+      institutional repository. Verified live 2026-09-01 — verb=Identify returns 200 text/xml with
+      repositoryName "NAGOYA Repository", baseURL https://nagoya.repo.nii.ac.jp/oai, protocolVersion
+      2.0, earliestDatestamp 2017-11-30T00:00:00Z, deletedRecord transient, granularity
+      YYYY-MM-DDThh:mm:ssZ and adminEmail ir-admin@nul.nagoya-u.ac.jp (Nagoya University Library).
+      verb=ListMetadataFormats returns seven prefixes — jpcoar_1.0, jpcoar, jpcoar_2.0, oai_dc, ddi,
+      jpcoar_v1 and lom — i.e. the JPCOAR schema plus Dublin Core, DDI and LOM. verb=ListSets returns
+      100 setSpecs per page mapping the university's own organisational units and journal series.
+      nagoya.repo.nii.ac.jp is an institution-specific subdomain on the National Institute of
+      Informatics' WEKO3 / JAIRO Cloud platform: the records, the metadata and the library staff are
+      Nagoya's; the software, the host and the contract are NII's. Recorded here as a tenant
+      relationship — a real institutional fact — rather than credited to Nagoya as its own
+      engineering. No WEKO3 contract is saved under this institution, because it is a product
+      contract identical across every JAIRO Cloud repository in Japan. Operational note: the endpoint
+      returns 406 to a browser User-Agent and 200 to a default client.
+    humanURL: https://nagoya.repo.nii.ac.jp/
+    baseURL: https://nagoya.repo.nii.ac.jp/oai
+    tags: [ Research Repository, OAI-PMH, JPCOAR, WEKO, Open Access, Tenant, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://nagoya.repo.nii.ac.jp/about
+      - type: Conformance
+        url: conformance/nagoya-conformance.yml
+  - aid: nagoya:ror-registration
+    name: ROR registration — Nagoya University
+    x-operator: registry
+    description: >-
+      Nagoya University is registered in the Research Organization Registry as ROR ID
+      https://ror.org/04chrp450, status active, established 1871, names "Nagoya University" /
+      "名古屋大学" / "Nagoya Daigaku", website http://en.nagoya-u.ac.jp/, with cross-registered
+      external identifiers GRID grid.27476.30, ISNI 0000 0001 0943 978X, Wikidata Q1191132 and
+      Crossref Funder ID 501100004823. This is a membership in an identifier registry the institution
+      is REGISTERED IN, not a contract it operates: the ROR API is ROR's and is not saved here. The
+      entry is recorded because being a registered research organisation is a fact about Nagoya
+      University. Verified 2026-09-01 against https://api.ror.org/v2/organizations/04chrp450 (200).
+    humanURL: https://ror.org/04chrp450
+    baseURL: https://api.ror.org/v2/organizations/04chrp450
+    tags: [ Registry, Identifiers, ROR, Research, Metadata ]
+    properties:
+      - type: Registration
+        url: https://ror.org/04chrp450
+  - aid: nagoya:gakunin-federation
+    name: GakuNin academic access management federation membership
+    x-operator: federation
+    description: >-
+      Nagoya University is a participating institution in GakuNin (学術認証フェデレーション), the
+      Japanese national academic access management federation operated by the National Institute of
+      Informatics, and states so on its own site. Through it the university's THERS account
+      authenticates against federated services including GakuNin mAP (cg.gakunin.jp), meatmail,
+      GakuNin RDM (rdm.nii.ac.jp), GakuNin LMS (lms.nii.ac.jp), mdx, Q-leap LMS, Nature Research,
+      SpringerLink, Atypon and Westlaw. A federation is shared by definition and the IdP behind it is
+      the institution's, so this membership is recorded rather than treated as a shared-host
+      misattribution. The federation's signed metadata aggregate is the machine-readable artifact;
+      it belongs to GakuNin and is not saved here. Note that the university's own documentation of
+      this service exists only on the Japanese surface — the English equivalent returns 404.
+    humanURL: https://www.gakunin.jp/en/
+    baseURL: https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml
+    tags: [ Identity Federation, SAML, Shibboleth, GakuNin, Japan, Membership ]
+    properties:
+      - type: Documentation
+        url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+      - type: Conformance
+        url: conformance/nagoya-conformance.yml
 common:
-  - type: DomainSecurity
-    url: security/nagoya-domain-security.yml
   - type: Website
     url: https://en.nagoya-u.ac.jp/
-  - type: InstitutionalRepository
+  - type: ResearchRepository
     url: https://nagoya.repo.nii.ac.jp/
-  - type: ITServices
-    url: https://icts.nagoya-u.ac.jp/en/
+  - type: IdentityFederation
+    url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+  - type: OpenData
+    url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+  - type: ResearchComputing
+    url: https://icts.nagoya-u.ac.jp/ja/sc/
+  - type: AIPolicy
+    url: https://www.nagoya-u.ac.jp/about-nu/declaration/ai/index.html
+  - type: Documentation
+    url: https://icts.nagoya-u.ac.jp/en/services/
   - type: Authentication
     url: https://icts.nagoya-u.ac.jp/en/services/nuid/
+  - type: Support
+    url: https://en.nagoya-u.ac.jp/site/contact/
+  - type: PrivacyPolicy
+    url: https://en.nagoya-u.ac.jp/site/privacy/
+  - type: Blog
+    url: https://en.nagoya-u.ac.jp/research/activities/news/index.html
   - type: LinkedIn
     url: https://www.linkedin.com/school/nagoya-university/
+  - type: Conformance
+    url: conformance/nagoya-conformance.yml
+  - type: DomainSecurity
+    url: security/nagoya-domain-security.yml
   - type: Plans
     url: plans/nagoya-plans-pricing.yml
   - type: RateLimits
@@ -94,6 +230,91 @@ common:
     url: review.yml
   - type: JSONLD
     url: json-ld/nagoya-context.jsonld
+x-coverage:
+  state: covered
+  reason: no_public_api
+  detail: >-
+    Every reachable surface was probed on 2026-09-01 and two institution-operated machine surfaces
+    were found and verified — a Shibboleth SAML 2.0 identity provider published in the GakuNin
+    federation aggregate, and the ERG Science Center's open Arase/ground-based data archive at ISEE —
+    plus three education-regime domain standards evidenced from public endpoints (shibboleth, saml,
+    oai-pmh). The profile stays thin because Nagoya University operates no public API: no developer
+    portal, no OpenAPI, no API keys, no OAuth, and no llms.txt or security.txt. api., data.,
+    opendata. and developer.nagoya-u.ac.jp do not resolve. The NAGOYA Repository OAI-PMH endpoint is
+    recorded as a TENANT relationship on NII's WEKO3 / JAIRO Cloud rather than as Nagoya's contract,
+    and no WEKO3 spec has been generated to stand in for one — that product contract is identical
+    across every JAIRO Cloud repository in Japan and belongs in NII's own repo. The ERG archive is
+    left uncontracted for the same no-fabrication reason: it is an Apache directory tree consumed by
+    SPEDAS/pySPEDAS, not a REST API. github.com/NagoyaUniversity exists but is not the institution —
+    it is a 2017 shell with one forked repo and no name, description or verification, and is not
+    credited. Student records, course registration and the NU Portal are behind THERS/GakuNin SSO.
+    Two access notes: the OAI-PMH endpoint 406s a browser User-Agent and 200s a default client, and
+    the university's own GakuNin documentation exists only in Japanese (the English path 404s).
+  generated: '2026-09-01'
+  method: probed
+  evidence:
+    - url: https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml
+      status: 200
+    - url: https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO
+      status: 500
+    - url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+      status: 200
+    - url: https://icts.nagoya-u.ac.jp/en/services/gakunin/
+      status: 404
+    - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+      status: 200
+    - url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+      status: 200
+    - url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/satellite/erg/
+      status: 200
+    - url: https://ergsc.isee.nagoya-u.ac.jp/data/
+      status: 403
+    - url: https://ergsc.isee.nagoya-u.ac.jp/erg_socware/bleeding_edge/
+      status: 401
+    - url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+      status: 200
+    - url: https://nagoya.repo.nii.ac.jp/oai?verb=ListMetadataFormats
+      status: 200
+    - url: https://nagoya.repo.nii.ac.jp/oai?verb=ListSets
+      status: 200
+    - url: https://api.ror.org/v2/organizations/04chrp450
+      status: 200
+    - url: https://api.datacite.org/clients?query=nagoya
+      status: 200
+    - url: https://api.crossref.org/members?query=nagoya&rows=10
+      status: 200
+    - url: https://api.github.com/orgs/nagoya-u
+      status: 404
+    - url: https://api.github.com/orgs/NagoyaUniversity
+      status: 200
+    - url: https://www.nagoya-u.ac.jp/llms.txt
+      status: 404
+    - url: https://www.nagoya-u.ac.jp/.well-known/security.txt
+      status: 404
+    - url: https://www.nagoya-u.ac.jp/.well-known/apis.json
+      status: 404
+    - url: https://api.nagoya-u.ac.jp/
+      status: 0
+    - url: https://data.nagoya-u.ac.jp/
+      status: 0
+    - url: https://opendata.nagoya-u.ac.jp/
+      status: 0
+    - url: https://developer.nagoya-u.ac.jp/
+      status: 0
+    - url: https://profs.provost.nagoya-u.ac.jp/search?m=home&l=en
+      status: 200
+    - url: https://seeds-search.aip.nagoya-u.ac.jp/?lang=en
+      status: 200
+    - url: https://ocw.nagoya-u.jp/
+      status: 200
+    - url: https://portal.nagoya-u.ac.jp/
+      status: 200
+    - url: https://opac.nul.nagoya-u.ac.jp/
+      status: 200
+    - url: https://www.nagoya-u.ac.jp/about-nu/declaration/ai/index.html
+      status: 200
+    - url: https://en.nagoya-u.ac.jp/site/privacy/
+      status: 200
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
