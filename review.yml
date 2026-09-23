@@ -3,8 +3,67 @@ name: Nagoya University
 description: Nagoya University public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/nagoya/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 reviews:
+  - date: '2026-09-01'
+    rating: 2
+    summary: >-
+      University-pipeline re-profile with the operator axis applied. The June 2026 profile credited
+      Nagoya University with one surface, the NAGOYA Repository OAI-PMH endpoint, without settling
+      who operates it. That endpoint is a TENANT deployment on the National Institute of
+      Informatics' WEKO3 / JAIRO Cloud platform — the records, metadata and library administrators
+      (adminEmail ir-admin@nul.nagoya-u.ac.jp) are Nagoya's, the software, host and contract are
+      NII's — so it is now recorded as a tenant relationship and no WEKO3 spec is saved here. Two
+      genuinely institution-operated machine surfaces were found that the June profile missed: a
+      Shibboleth SAML 2.0 identity provider at shib.nagoya-u.ac.jp registered in GakuNin since
+      2014-04-30, and the ERG Science Center's open Arase/ground-based data archive at ISEE, which
+      SPEDAS and pySPEDAS read directly. ROR registration (04chrp450) and GakuNin federation
+      membership are recorded as registry and federation facts. Still no developer portal, no
+      OpenAPI, no API keys, no llms.txt and no security.txt; api./data./opendata./developer.
+      subdomains do not resolve. github.com/NagoyaUniversity is NOT the institution — a 2017 shell
+      with one forked repository — and is not credited. No fabricated endpoints or specs; the ERG
+      archive and the OAI-PMH endpoint are both deliberately left uncontracted rather than given a
+      generated spec.
+    endpoints:
+      - url: https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml
+        status: 200
+        note: GakuNin federation aggregate, 5,653,150 bytes, 650 entities; exactly one is Nagoya's IdP (PI0136JP).
+      - url: https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO
+        status: 500
+        note: Live Shibboleth IdP rejecting a GET with no AuthnRequest.
+      - url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+        status: 200
+        note: Institution's own GakuNin service page, naming the IdP entityID. Japanese only — the /en/ path 404s.
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        note: 10,615 eduGAIN entities, 173 GakuNin-registered, ZERO matching nagoya — the IdP is not exported to eduGAIN.
+      - url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+        status: 200
+        note: Open Apache index listing cef/, ground/, guest/, satellite/ — institution-operated data archive.
+      - url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/satellite/erg/
+        status: 200
+        note: Arase instrument directories att, hep, lepe, lepi, mepe, mepi, mgf, orb, pwe, xep.
+      - url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+        status: 200
+        note: repositoryName "NAGOYA Repository", adminEmail ir-admin@nul.nagoya-u.ac.jp. 406 to a browser User-Agent.
+      - url: https://nagoya.repo.nii.ac.jp/oai?verb=ListMetadataFormats
+        status: 200
+        note: jpcoar_1.0, jpcoar, jpcoar_2.0, oai_dc, ddi, jpcoar_v1, lom.
+      - url: https://api.ror.org/v2/organizations/04chrp450
+        status: 200
+        note: ROR 04chrp450, active, established 1871; GRID grid.27476.30, ISNI 0000 0001 0943 978X.
+      - url: https://api.datacite.org/clients?query=nagoya
+        status: 200
+        note: meta.total 0 — not a DataCite member. Crossref members query also returns 0.
+      - url: https://api.github.com/orgs/NagoyaUniversity
+        status: 200
+        note: Org exists but is a 2017 shell — no name, no description, 1 forked repo. Not the institution.
+      - url: https://api.nagoya-u.ac.jp/
+        status: 0
+        note: Does not resolve. data., opendata. and developer.nagoya-u.ac.jp likewise.
+      - url: https://www.nagoya-u.ac.jp/.well-known/security.txt
+        status: 404
+        note: No security.txt; llms.txt and .well-known/apis.json also 404.
   - date: '2026-06-03'
     rating: 2
     summary: >-

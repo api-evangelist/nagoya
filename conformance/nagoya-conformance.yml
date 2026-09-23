@@ -1,0 +1,136 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes of Nagoya University institution-operated hosts on 2026-09-01, plus the GakuNin
+  (Japanese academic access management federation) SAML metadata aggregate, the eduGAIN technical
+  entity list, the ROR v2 API, the DataCite REST API and the Crossref REST API.
+docs: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+note: >-
+  Conformance against the Kin Score `education` regime standards[]. Every entry below was reached by
+  fetching the named URL and reading the response body — none is a prose claim from a university web
+  page. Standards the institution does not publicly expose are recorded as conforms:false with the
+  negative probe that established it, and are never inferred from the presence of a vendor product.
+  The Shibboleth identity provider is institution-operated on nagoya-u.ac.jp. The OAI-PMH provider is
+  a TENANT surface: the repository, its metadata, its administrators and its content are Nagoya
+  University's, but the WEKO3 / JAIRO Cloud platform and the endpoint's host (nii.ac.jp) belong to
+  the National Institute of Informatics, so the operator is recorded as tenant and no NII contract is
+  saved under this institution.
+standards:
+- id: shibboleth
+  conforms: true
+  operator: institution
+  evidence: >-
+    Institution-operated Shibboleth Identity Provider registered in the GakuNin metadata aggregate
+    (https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml, 5,653,150 bytes, 650 EntityDescriptors,
+    fetched 2026-09-01, content-type application/samlmetadata+xml). Exactly one entity carries the
+    nagoya-u.ac.jp domain: EntityDescriptor ID="PI0136JP"
+    entityID="https://shib.nagoya-u.ac.jp/idp/shibboleth", with IDPSSODescriptor and
+    AttributeAuthorityDescriptor roles, shibmd:Scope regexp="false" nagoya-u.ac.jp, mdui:DisplayName
+    "Nagoya University" / "名古屋大学", mdui:Keywords "category:location:chubu
+    category:organizationType:university", and OrganizationURL http://www.nagoya-u.ac.jp. The X.509
+    signing certificate is issued by "NII Open Domain CA - G8 RSA" to CN=shib.nagoya-u.ac.jp,
+    O=Nagoya University, L=Nagoya city, ST=Aichi, C=JP. mdrpi:RegistrationInfo gives
+    registrationAuthority https://www.gakunin.jp and registrationInstant 2014-04-30T01:42:34Z. The
+    institution confirms the participation on its own site at
+    https://icts.nagoya-u.ac.jp/ja/services/gakunin/ (200), which names the entityid explicitly in a
+    Westlaw federation link. https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO returns 500
+    to a parameterless GET — a live Shibboleth IdP rejecting a request with no AuthnRequest.
+- id: saml
+  conforms: true
+  operator: institution
+  evidence: >-
+    The same IdP entity declares protocolSupportEnumeration "urn:oasis:names:tc:SAML:1.1:protocol
+    urn:mace:shibboleth:1.0 urn:oasis:names:tc:SAML:2.0:protocol" and publishes three
+    SingleSignOnService endpoints — https://shib.nagoya-u.ac.jp/idp/profile/Shibboleth/SSO,
+    https://shib.nagoya-u.ac.jp/idp/profile/SAML2/POST/SSO and
+    https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO. No Nagoya-operated SAML service
+    providers appear in the GakuNin aggregate; the institution consumes federated SPs (GakuNin mAP,
+    GakuNin RDM, GakuNin LMS, mdx, Nature Research, SpringerLink, Atypon, Westlaw) rather than
+    registering its own. Note the negative federation finding: the eduGAIN technical entity list
+    (https://technical.edugain.org/api.php?action=list_entities&format=json, 10,615 entities, 173 of
+    them GakuNin-registered) contains ZERO entities matching nagoya — this IdP is registered in
+    GakuNin but is not exported to eduGAIN.
+- id: oai-pmh
+  conforms: true
+  operator: tenant
+  evidence: >-
+    OAI-PMH 2.0 provider for the NAGOYA Repository. https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+    returns 200 text/xml with repositoryName "NAGOYA Repository", baseURL
+    https://nagoya.repo.nii.ac.jp/oai, protocolVersion 2.0, earliestDatestamp 2017-11-30T00:00:00Z,
+    deletedRecord transient, granularity YYYY-MM-DDThh:mm:ssZ and adminEmail
+    ir-admin@nul.nagoya-u.ac.jp — the Nagoya University Library, which is what makes the repository
+    the institution's even though the host is not. verb=ListMetadataFormats (200) returns seven
+    prefixes — jpcoar_1.0, jpcoar, jpcoar_2.0, oai_dc, ddi, jpcoar_v1 and lom — i.e. the JPCOAR
+    schema of the Japan Consortium for Open Access Repositories alongside Dublin Core, DDI and LOM.
+    verb=ListSets (200, 47,425 bytes) enumerates 100 setSpecs per page covering university
+    organisational units (M300 情報連携推進本部, E150 教養部, I200 基礎理論研究センター, T290
+    大学文書資料室) and journal series. CONTENT is Nagoya's; the CONTRACT is the NII WEKO3 / JAIRO
+    Cloud platform's and is not saved here. Requires a non-browser User-Agent: the same URL returns
+    406 Not Acceptable from nginx to a Chrome UA and 200 to a default client.
+- id: orcid
+  conforms: false
+  operator: none
+  evidence: >-
+    No institution-operated ORCID member integration found. There is no institutional CRIS on a
+    nagoya-u.ac.jp host exposing an ORCID client configuration; the researcher directory at
+    https://profs.provost.nagoya-u.ac.jp/ (200) publishes no API, no robots.txt and no sitemap (all
+    404), and researcher identity in Japan is largely carried by NII's researchmap rather than an
+    institution-run ORCID integration. https://pub.orcid.org/v3.0/search/?q=affiliation-org-name:"Nagoya
+    University" returns 200 with individual researcher iDs, which evidences researchers' own
+    affiliations and NOT an institutional integration — it is deliberately not counted as conformance.
+- id: datacite
+  conforms: false
+  operator: none
+  evidence: >-
+    Not a DataCite member. https://api.datacite.org/clients?query=nagoya returns 200 with meta.total
+    0 and https://api.datacite.org/providers?query=nagoya returns 200 with meta.total 0. Japanese
+    institutional repositories mint DOIs through JaLC (Japan Link Center), which is not one of the
+    education regime's named standards, so no conformance is claimed either way.
+- id: crossref
+  conforms: false
+  operator: none
+  evidence: >-
+    Not a Crossref member. https://api.crossref.org/members?query=nagoya&rows=10 returns 200 with
+    message.total-results 0.
+- id: scim
+  conforms: false
+  operator: none
+  evidence: >-
+    No SCIM endpoint or provisioning documentation on any institution host. Account lifecycle runs on
+    the THERS 機構アカウント (Tokai National Higher Education and Research System integrated account)
+    and NU ID with a CAS multi-factor SSO front end
+    (https://icts.nagoya-u.ac.jp/ja/services/nuid/CAS/, 200); none of it is described as a
+    machine-readable provisioning interface.
+- id: lti
+  conforms: false
+  operator: none
+  evidence: >-
+    No LTI tool or platform registration published. The learning management system reachable to
+    Nagoya staff and students is the federated NII GakuNin LMS (https://lms.nii.ac.jp/), listed as a
+    consumed federation service on https://icts.nagoya-u.ac.jp/ja/services/gakunin/ (200) — a tenant
+    relationship on NII infrastructure, not an institution-published LTI surface.
+- id: oneroster
+  conforms: false
+  operator: none
+  evidence: >-
+    No OneRoster endpoint. Student records and course registration sit behind the NU Portal
+    (https://portal.nagoya-u.ac.jp/, 200 login page) and THERS authentication; nothing is publicly
+    documented.
+- id: ed-fi
+  conforms: false
+  operator: none
+  evidence: >-
+    Ed-Fi is a US K-12 / state-agency data standard with no adoption in Japanese national
+    universities; no endpoint, ODS, or reference is published on any nagoya-u.ac.jp host.
+- id: caliper
+  conforms: false
+  operator: none
+  evidence: >-
+    No Caliper analytics event store or endpoint published on any institution host.
+- id: qti
+  conforms: false
+  operator: none
+  evidence: >-
+    No QTI assessment item bank or endpoint published. Nagoya University OpenCourseWare
+    (https://ocw.nagoya-u.jp/, 200) publishes course material as web pages and carries no OAI-PMH,
+    RSS or sitemap (all 404).

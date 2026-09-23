@@ -1,0 +1,99 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes of Nagoya University identity hosts and service pages on 2026-09-01, plus the GakuNin
+  SAML metadata aggregate at https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml.
+note: >-
+  Nagoya University publishes no API key, OAuth client registration or token endpoint of any kind.
+  This file records the authentication surfaces it DOES operate — a federated SAML identity provider
+  and a campus SSO — and states plainly which surfaces are open and which are closed. Nothing here
+  is a developer credential path; do not read it as one.
+summary: >-
+  The only machine-readable authentication artifact Nagoya University publishes is its Shibboleth
+  SAML 2.0 identity provider metadata, distributed through the GakuNin federation aggregate. The one
+  institution-operated data surface that is programmatically reachable — the ERG Science Center
+  archive — requires no authentication at all for its open directories. The one repository surface —
+  OAI-PMH on the NII WEKO3 tenant — is keyless and open by protocol.
+mechanisms:
+- id: shibboleth-saml
+  type: saml2
+  operator: institution
+  public: true
+  description: >-
+    Institution-operated Shibboleth IdP. entityID https://shib.nagoya-u.ac.jp/idp/shibboleth,
+    scope nagoya-u.ac.jp, registered with GakuNin on 2014-04-30. SingleSignOnService endpoints:
+    /idp/profile/Shibboleth/SSO (Shibboleth 1.0), /idp/profile/SAML2/POST/SSO and
+    /idp/profile/SAML2/Redirect/SSO. An AttributeAuthorityDescriptor role is present. Metadata is
+    obtained from the federation aggregate, not from a per-entity MDQ service — GakuNin publishes a
+    single signed aggregate rather than an mdq endpoint.
+  metadata: https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml
+  endpoint: https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO
+  evidence:
+  - url: https://metadata.gakunin.nii.ac.jp/gakunin-metadata.xml
+    status: 200
+  - url: https://shib.nagoya-u.ac.jp/idp/profile/SAML2/Redirect/SSO
+    status: 500
+  - url: https://icts.nagoya-u.ac.jp/ja/services/gakunin/
+    status: 200
+- id: thers-account-cas
+  type: sso
+  operator: institution
+  public: false
+  description: >-
+    THERS 機構アカウント (Tokai National Higher Education and Research System integrated account) and
+    NU ID, fronted by a CAS single sign-on with multi-factor authentication that the major campus
+    information systems were migrated onto. Human login only; no documented programmatic interface,
+    no client registration, no token endpoint.
+  evidence:
+  - url: https://icts.nagoya-u.ac.jp/en/services/nuid/
+    status: 200
+  - url: https://icts.nagoya-u.ac.jp/ja/services/nuid/CAS/
+    status: 200
+  - url: https://portal.nagoya-u.ac.jp/
+    status: 200
+- id: anonymous-oai
+  type: none
+  operator: tenant
+  public: true
+  description: >-
+    The NAGOYA Repository OAI-PMH interface is keyless and unauthenticated, as the protocol requires.
+    It does content-negotiate on User-Agent at the nginx layer: a browser User-Agent gets 406 Not
+    Acceptable, a default client gets 200 XML.
+  endpoint: https://nagoya.repo.nii.ac.jp/oai
+  evidence:
+  - url: https://nagoya.repo.nii.ac.jp/oai?verb=Identify
+    status: 200
+- id: anonymous-ergsc
+  type: none
+  operator: institution
+  public: true
+  description: >-
+    The ERG Science Center open data directories under /data/ergsc/ are served without
+    authentication. Adjacent paths are closed and that boundary was probed, not assumed:
+    /erg_socware/bleeding_edge/ returns 401 (Basic auth for working-group software), /data/ returns
+    403, and the ERG Web Analysis Tool at /ergwat4/login.cgi is a login.
+  endpoint: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+  evidence:
+  - url: https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/
+    status: 200
+  - url: https://ergsc.isee.nagoya-u.ac.jp/data/
+    status: 403
+  - url: https://ergsc.isee.nagoya-u.ac.jp/erg_socware/bleeding_edge/
+    status: 401
+absent:
+- api-keys
+- oauth2
+- openid-connect
+- client-credentials
+- personal-access-tokens
+- dynamic-client-registration
+- protected-resource-metadata
+absent_evidence:
+- url: https://www.nagoya-u.ac.jp/.well-known/security.txt
+  status: 404
+- url: https://www.nagoya-u.ac.jp/llms.txt
+  status: 404
+- url: https://developer.nagoya-u.ac.jp/
+  status: 0
+- url: https://api.nagoya-u.ac.jp/
+  status: 0
