@@ -1,4 +1,4 @@
-# Nagoya University (nagoya)
+# Nagoya University
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,51 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Nagoya University (名古屋大学) is a national research university in Nagoya, Aichi, Japan, ranked #152 in the QS World University Rankings 2025. This repository catalogs the institution's public developer/API footprint as an [APIs.json](https://apisjson.org) profile. The most clearly documented, verified-live machine API is the NAGOYA Repository OAI-PMH interface on the NII WEKO3 / JAIRO Cloud platform; most other systems are gated behind THERS / GakuNin (Shibboleth/SAML) authentication.
+Nagoya University (名古屋大学) is a national research university in Nagoya, Aichi, Japan, founded 1871, a member of Japan's Designated National University group and, since 2020, part of the Tokai National Higher Education and Research System (THERS) alongside Gifu University. It runs no developer portal, publishes no OpenAPI and issues no API keys, and this profile does not pretend otherwise. What it does operate, on its own nagoya-u.ac.jp hosts, are two genuinely institution-run machine surfaces: a Shibboleth SAML 2.0 identity provider (https://shib.nagoya-u.ac.jp/idp/shibboleth) registered in GakuNin, Japan's academic access management federation, since 2014; and the ERG Science Center at the Institute for Space-Earth Environmental Research, which serves the Arase (ERG) satellite and ground-based observation data archive as an open, machine-traversable HTTPS tree that the pySPEDAS and SPEDAS analysis clients read directly. Its institutional repository, NAGOYA Repository, is a TENANT deployment on the National Institute of Informatics' WEKO3 / JAIRO Cloud platform: the content, the metadata and the library administrators are Nagoya's, but the OAI-PMH endpoint and its contract are NII's and are not credited here. The university is registered in ROR (04chrp450) but is a member of neither DataCite nor Crossref — Japanese repositories mint DOIs through JaLC. Student records, course registration, the NU Portal and campus IT all sit behind THERS/GakuNin authentication and are not publicly documented developer APIs. Several relevant surfaces, including the university's own GakuNin service documentation, exist only in Japanese.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/nagoya/refs/heads/main/apis.yml
-- Run it with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=nagoya-api-evangelist&utm_content=repo
+**Areas:** Education · Higher Education · University · Japan · Designated National University · Research · Research Repository · Open Access · OAI-PMH · Identity Federation · Shibboleth · Research Data
 
-## Type
+## Nagoya University on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Nagoya University is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nagoya/](https://apis.io/providers/nagoya/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-Education, Higher Education, University, Research, Open Access, Institutional Repository, OAI-PMH, Japan
+- [Nagoya University Shibboleth Identity Provider (GakuNin)](https://apis.io/apis/nagoya/identity-federation/) — Institution-operated Shibboleth SAML 2.0 identity provider on the university's own host, published as machine-readable metadata in the GakuNin…
+- [ERG Science Center data archive (ISEE, Nagoya University)](https://apis.io/apis/nagoya/ergsc-data-archive/) — Open, machine-traversable HTTPS data archive operated by the ERG Science Center at Nagoya University's Institute for Space-Earth Environmental Research…
+- [NAGOYA Repository OAI-PMH (NII WEKO3 / JAIRO Cloud tenant)](https://apis.io/apis/nagoya/repo-oai/) — OAI-PMH 2.0 metadata harvesting interface for the NAGOYA Repository, Nagoya University's institutional repository. Verified live 2026-09-01 — verb=Identify…
+- [ROR registration — Nagoya University](https://apis.io/apis/nagoya/ror-registration/) — Nagoya University is registered in the Research Organization Registry as ROR ID https://ror.org/04chrp450, status active, established 1871, names "Nagoya…
+- [GakuNin academic access management federation membership](https://apis.io/apis/nagoya/gakunin-federation/) — Nagoya University is a participating institution in GakuNin (学術認証フェデレーション), the Japanese national academic access management federation operated by the…
 
-## APIs
+### Published properties
 
-- **NAGOYA Repository OAI-PMH** — OAI-PMH 2.0 metadata harvesting for the Nagoya University institutional repository (WEKO3 / JAIRO Cloud). Base URL: `https://nagoya.repo.nii.ac.jp/oai`. Docs / front end: https://nagoya.repo.nii.ac.jp/
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Plans / Rate Limits / FinOps
+#### JSON-LD (1)
 
-- Plans & Pricing: [plans/nagoya-plans-pricing.yml](plans/nagoya-plans-pricing.yml)
-- Rate Limits: [rate-limits/nagoya-rate-limits.yml](rate-limits/nagoya-rate-limits.yml)
-- FinOps: [finops/nagoya-finops.yml](finops/nagoya-finops.yml)
+Linked-data contexts for the provider's vocabulary.
 
-## Timestamps
+- [Nagoya Context](https://apis.io/jsonld/nagoya/nagoya-context/)
 
-- **Created:** 2026-06-03
-- **Modified:** 2026-06-03
+#### Security (2)
 
-## Common Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- Website: https://en.nagoya-u.ac.jp/
-- Institutional Repository: https://nagoya.repo.nii.ac.jp/
-- IT Services (ICTS): https://icts.nagoya-u.ac.jp/en/
-- Authentication (NU-ID): https://icts.nagoya-u.ac.jp/en/services/nuid/
-- LinkedIn: https://www.linkedin.com/school/nagoya-university/
+- [Nagoya Authentication](https://apis.io/security/nagoya/nagoya-authentication/)
+- [Nagoya Domain Security](https://apis.io/security/nagoya/nagoya-domain-security/)
 
-## Notes
+#### Plans and pricing (1)
 
-- The NAGOYA Repository OAI-PMH endpoint was verified live: the `Identify` verb returns valid OAI-PMH 2.0 XML with `repositoryName` "NAGOYA Repository" and `baseURL` `https://nagoya.repo.nii.ac.jp/oai`.
-- The underlying WEKO3 platform also exposes search/record paths, but probes returned 400/500/410 and they are not presented as documented developer APIs, so they are not cataloged.
-- Student/staff systems (portal, NU-ID, course registration) are gated behind THERS / GakuNin Shibboleth/SAML SSO and are not public developer APIs.
-- No official university-wide GitHub organization or public developer portal was found; only individual lab/research-group orgs exist. No endpoints were fabricated.
+Published plans, tiers and prices.
 
-## Maintainers
+- [Nagoya Plans Pricing](https://apis.io/plans/nagoya/nagoya-plans-pricing/)
 
-- Kin Lane — kin@apievangelist.com
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nagoya Rate Limits](https://apis.io/rate-limits/nagoya/nagoya-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Nagoya Finops](https://apis.io/finops/nagoya/nagoya-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://en.nagoya-u.ac.jp/)
+- [Documentation](https://icts.nagoya-u.ac.jp/en/services/)
+- [Support](https://en.nagoya-u.ac.jp/site/contact/)
+- [Blog](https://en.nagoya-u.ac.jp/research/activities/news/index.html)
+- [Privacy policy](https://en.nagoya-u.ac.jp/site/privacy/)
+
+## API Evangelist rating
+
+**Kin Score 27.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 14.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 28.9 |
+
+**Agent readiness 3.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 28.4** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nagoya/](https://apis.io/providers/nagoya/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nagoya University: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nagoya/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
